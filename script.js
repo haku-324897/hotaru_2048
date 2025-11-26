@@ -188,28 +188,24 @@ function newGame() {
     init();
 }
 
-// キーボードイベント
-document.addEventListener('keydown', (e) => {
+// 移動処理の共通関数
+function handleMove(direction) {
     if (document.getElementById('game-over').classList.contains('show')) {
         return;
     }
 
     let moved = false;
-    switch(e.key) {
-        case 'ArrowLeft':
-            e.preventDefault();
+    switch(direction) {
+        case 'left':
             moved = moveLeft();
             break;
-        case 'ArrowRight':
-            e.preventDefault();
+        case 'right':
             moved = moveRight();
             break;
-        case 'ArrowUp':
-            e.preventDefault();
+        case 'up':
             moved = moveUp();
             break;
-        case 'ArrowDown':
-            e.preventDefault();
+        case 'down':
             moved = moveDown();
             break;
     }
@@ -222,7 +218,77 @@ document.addEventListener('keydown', (e) => {
             document.getElementById('game-over').classList.add('show');
         }
     }
+}
+
+// キーボードイベント
+document.addEventListener('keydown', (e) => {
+    let direction = null;
+    switch(e.key) {
+        case 'ArrowLeft':
+            e.preventDefault();
+            direction = 'left';
+            break;
+        case 'ArrowRight':
+            e.preventDefault();
+            direction = 'right';
+            break;
+        case 'ArrowUp':
+            e.preventDefault();
+            direction = 'up';
+            break;
+        case 'ArrowDown':
+            e.preventDefault();
+            direction = 'down';
+            break;
+    }
+    
+    if (direction) {
+        handleMove(direction);
+    }
 });
+
+// タッチイベント（スワイプ操作対応）
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+const gameBoard = document.getElementById('game-board');
+
+gameBoard.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+gameBoard.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    touchEndY = e.changedTouches[0].clientY;
+    
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    const minSwipeDistance = 30; // 最小スワイプ距離
+    
+    // スワイプの方向を判定
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // 横方向のスワイプ
+        if (Math.abs(deltaX) > minSwipeDistance) {
+            if (deltaX > 0) {
+                handleMove('right');
+            } else {
+                handleMove('left');
+            }
+        }
+    } else {
+        // 縦方向のスワイプ
+        if (Math.abs(deltaY) > minSwipeDistance) {
+            if (deltaY > 0) {
+                handleMove('down');
+            } else {
+                handleMove('up');
+            }
+        }
+    }
+}, { passive: true });
 
 // 初期化
 init();
