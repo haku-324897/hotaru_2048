@@ -57,6 +57,7 @@ h1 {
     padding: 10px;
     display: inline-block;
     margin: 20px 0;
+    position: relative;
 }
 
 .grid-row {
@@ -99,6 +100,7 @@ h1 {
     color: #776e65;
     position: absolute;
     transition: all 0.15s ease-in-out;
+    z-index: 0;
 }
 
 .tile-2 { background: #eee4da; color: #776e65; }
@@ -117,6 +119,7 @@ h1 {
     position: relative;
     width: 370px;
     height: 370px;
+    margin-bottom: 30px;
 }
 
 .game-over {
@@ -158,4 +161,6 @@ h1 {
     color: #776e65;
     margin-top: 20px;
     font-size: 14px;
+    position: relative;
+    z-index: 1;
 }
