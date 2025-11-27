@@ -3,6 +3,22 @@ let grid = [];
 let score = 0;
 let bestScore = localStorage.getItem('bestScore') || 0;
 
+// BGMの設定
+const bgm = new Audio('sounds/bgm.mp3');
+bgm.loop = true;
+bgm.volume = 0.3; // 音量調整（0.0〜1.0）
+let bgmStarted = false; // BGMが開始されたかどうか
+
+// BGMを開始する関数
+function startBGM() {
+    if (!bgmStarted) {
+        bgm.play().catch(error => {
+            console.log('BGMの再生に失敗しました:', error);
+        });
+        bgmStarted = true;
+    }
+}
+
 // 初期化
 function init() {
     document.getElementById('best').textContent = bestScore;
@@ -190,6 +206,9 @@ function newGame() {
 
 // 移動処理の共通関数
 function handleMove(direction) {
+    // 最初の操作でBGMを開始
+    startBGM();
+    
     if (document.getElementById('game-over').classList.contains('show')) {
         return;
     }
