@@ -71,6 +71,7 @@ h1 {
     display: inline-block;
     margin: 20px 0;
     position: relative;
+    touch-action: none; /* タッチ操作によるスクロールを無効化 */
 }
 
 .grid-row {
@@ -133,6 +134,7 @@ h1 {
     width: 370px;
     height: 370px;
     margin: 20px auto 30px auto;
+    touch-action: none; /* タッチ操作によるスクロールを無効化 */
 }
 
 .game-over {
