@@ -15,11 +15,24 @@ body {
 }
 
 .container {
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
     background: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 1200px;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+/* メインコンテンツ（左側） */
+.main-content {
+    text-align: center;
+    flex: 0 0 auto;
 }
 
 h1 {
@@ -119,7 +132,7 @@ h1 {
     position: relative;
     width: 370px;
     height: 370px;
-    margin-bottom: 30px;
+    margin: 20px auto 30px auto;
 }
 
 .game-over {
@@ -163,4 +176,303 @@ h1 {
     font-size: 14px;
     position: relative;
     z-index: 1;
+}
+
+/* キャラクターコンテナ（右側） */
+.character-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 370px;
+    height: 370px;
+    position: relative;
+    flex: 0 0 auto;
+    margin-top: 180px; /* タイルの上部と揃える */
+}
+
+/* ロボット本体（ゲームボードと同じサイズ） */
+.character {
+    position: relative;
+    width: 370px;
+    height: 370px;
+    animation: robotBounce 2s ease-in-out infinite;
+}
+
+/* ロボットの体（茶色） */
+.robot-body {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 240px;
+    background: #8b6f47;
+    border-radius: 100px 100px 60px 60px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* フード（オフホワイト） */
+.robot-hood {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 200px;
+    background: #f5f5dc;
+    border-radius: 120px 120px 80px 80px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* フードの腕部分 */
+.robot-hood::before,
+.robot-hood::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 80px;
+    background: #f5f5dc;
+    border-radius: 40px;
+    top: 100px;
+}
+
+.robot-hood::before {
+    left: -25px;
+}
+
+.robot-hood::after {
+    right: -25px;
+}
+
+/* 頭上のユニット（センサー付き） */
+.robot-top-unit {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 50px;
+    background: #2c2c2c;
+    border-radius: 10px;
+    z-index: 3;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.robot-top-unit::before,
+.robot-top-unit::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #4a4a4a;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.robot-top-unit::before {
+    left: 15px;
+}
+
+.robot-top-unit::after {
+    right: 15px;
+}
+
+/* ロボットの顔 */
+.robot-face {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 160px;
+    background: #8b6f47;
+    border-radius: 50%;
+    z-index: 3;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 目（大きく、動く） */
+.robot-eye {
+    position: absolute;
+    width: 40px;
+    height: 56px;
+    background: white;
+    border-radius: 50%;
+    top: 40px;
+    animation: eyeMove 4s ease-in-out infinite;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.robot-eye::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #654321;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pupilMove 4s ease-in-out infinite;
+}
+
+.robot-eye::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #d4a574;
+    border-radius: 50%;
+    top: 30%;
+    left: 40%;
+    animation: highlightMove 4s ease-in-out infinite;
+}
+
+.left-eye {
+    left: 30px;
+}
+
+.right-eye {
+    right: 30px;
+}
+
+/* 鼻 */
+.robot-nose {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background: #654321;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* 口（動く、丸みのある笑顔） */
+.robot-mouth {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 25px;
+    border: 4px solid #654321;
+    border-top: none;
+    border-radius: 0 0 50px 50px;
+    background: transparent;
+    animation: mouthMove 3s ease-in-out infinite;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 車輪 */
+.robot-wheels {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 30px;
+    z-index: 1;
+}
+
+.wheel {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #2c2c2c;
+    border-radius: 50%;
+    bottom: 0;
+    border: 5px solid #1a1a1a;
+}
+
+.left-wheel {
+    left: 30px;
+}
+
+.right-wheel {
+    right: 30px;
+}
+
+/* アニメーション：全体の上下動 */
+@keyframes robotBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* アニメーション：目が動く */
+@keyframes eyeMove {
+    0%, 100% {
+        transform: translateY(0) scaleY(1);
+    }
+    25% {
+        transform: translateY(-5px) scaleY(0.9);
+    }
+    50% {
+        transform: translateY(0) scaleY(1);
+    }
+    75% {
+        transform: translateY(5px) scaleY(1.1);
+    }
+}
+
+/* アニメーション：瞳孔が動く */
+@keyframes pupilMove {
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+    25% {
+        transform: translate(-60%, -40%);
+    }
+    50% {
+        transform: translate(-50%, -50%);
+    }
+    75% {
+        transform: translate(-40%, -60%);
+    }
+}
+
+/* アニメーション：ハイライトが動く */
+@keyframes highlightMove {
+    0%, 100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(3px, 3px);
+    }
+}
+
+/* アニメーション：口が動く（開閉） */
+@keyframes mouthMove {
+    0%, 100% {
+        width: 50px;
+        height: 25px;
+        transform: translateX(-50%) scaleY(1);
+    }
+    50% {
+        width: 55px;
+        height: 30px;
+        transform: translateX(-50%) scaleY(1.1);
+    }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 850px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .character-container {
+        margin-top: 20px;
+    }
 }
