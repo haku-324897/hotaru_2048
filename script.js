@@ -275,11 +275,13 @@ let touchEndY = 0;
 const gameBoard = document.getElementById('game-board');
 
 gameBoard.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // デフォルトのスクロール動作を防ぐ
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
-}, { passive: true });
+}, { passive: false });
 
 gameBoard.addEventListener('touchend', (e) => {
+    e.preventDefault(); // デフォルトのスクロール動作を防ぐ
     touchEndX = e.changedTouches[0].clientX;
     touchEndY = e.changedTouches[0].clientY;
     
@@ -307,7 +309,7 @@ gameBoard.addEventListener('touchend', (e) => {
             }
         }
     }
-}, { passive: true });
+}, { passive: false });
 
 // 初期化
 init();
